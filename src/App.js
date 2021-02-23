@@ -1,9 +1,10 @@
-import './App.css';
+import "./App.css";
+import AppRouter from "./router/Router";
 
 function App() {
   return (
     <div className="App">
-      <h1>Let's build a job search app</h1>
+      <AppRouter />
     </div>
   );
 }
