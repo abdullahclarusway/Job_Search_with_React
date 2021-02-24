@@ -11,16 +11,27 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormGroup from "@material-ui/core/FormGroup";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import img from "../assets/logo1.png";
+import Button from "@material-ui/core/Button";
+import { ButtonGroup } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+
   menuButton: {
     marginRight: theme.spacing(2),
   },
   title: {
     flexGrow: 1,
+    marginLeft: 20,
+    fontWeight: 600,
+    fontSize: 28,
+  },
+  logo: {
+    width: 50,
+    borderRadius: 50,
   },
 }));
 
@@ -46,15 +57,15 @@ export default function Navbar() {
     <div className={classes.root}>
       <FormGroup></FormGroup>
       <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
+        <Toolbar className={classes.container}>
+          <img className={classes.logo} src={img} alt="logo" />
+          <Typography variant="h6" className={classes.title}>
+            Lighthouse Job Search
+          </Typography>
+          <ButtonGroup disableElevation variant="contained" color="primary">
+            <Button>Sign in</Button>
+            <Button>Sign up</Button>
+          </ButtonGroup>
           <Typography variant="h6" className={classes.title}></Typography>
           {auth && (
             <div>
