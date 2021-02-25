@@ -4,17 +4,14 @@ import axios from "axios";
 import Blog from "../blog/Blog";
 
 function Main() {
-  // const fetchData = async () => {
-  //   const response = await axios
-  //     .get("https://remotive.io/api/remote-jobs?category=software-dev")
-  //     .then((res) => console.log(res.data.jobs))
-  //     .catch((err) => console.log(err));
-  // };
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-
+  useEffect(async () => {
+    await axios
+      .get("https://remotive.io/api/remote-jobs")
+      .then((res) => {
+        console.log(res.data.jobs);
+      })
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <div>
       <Blog />
