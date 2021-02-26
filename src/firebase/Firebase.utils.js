@@ -11,7 +11,6 @@ const firebaseConfig = {
   appId: "1:153911193602:web:ea1eb9066d2a09fb1e771b",
 };
 
-
 class Firebase {
   constructor() {
     //TODO: add initialize check :: if (firebase.apps.length === 0)
@@ -48,10 +47,10 @@ class Firebase {
     }
   }
 
-  //   // logout signOut
-  //   signOut() {
-  //     this.firebaseAuth.signOut();
-  //   }
+  // logout signOut
+  signOut() {
+    this.firebaseAuth.signOut();
+  }
 
   //   // forgot password sendPasswordResetEmail
   //   async forgotPassword(email) {
