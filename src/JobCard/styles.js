@@ -20,12 +20,9 @@ export default makeStyles({
     borderRadius: "15px",
     height: "100%",
     position: "relative",
-  },
-  overlay: {
-    position: "absolute",
-    top: "20px",
-    left: "20px",
-    color: "white",
+    cursor: "pointer",
+    margin: 10,
+    boxSizing: "border-box",
   },
   overlay2: {
     position: "absolute",
@@ -38,7 +35,7 @@ export default makeStyles({
   },
   details: {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     margin: "20px",
   },
   title: {
