@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -14,6 +14,9 @@ import Menu from "@material-ui/core/Menu";
 import img from "../assets/logo1.png";
 import Button from "@material-ui/core/Button";
 import { ButtonGroup } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+import firebase from "../firebase/Firebase.utils";
+import { FirebaseAuthContext } from "../context/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,14 +31,18 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 20,
     fontWeight: 600,
     fontSize: 28,
+    cursor: "pointer",
   },
   logo: {
     width: 50,
     borderRadius: 50,
+    cursor: "pointer",
   },
 }));
 
 export default function Navbar() {
+  const { currentUser } = useContext(FirebaseAuthContext);
+  const history = useHistory();
   const classes = useStyles();
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -43,6 +50,10 @@ export default function Navbar() {
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
+  };
+  const handleSignOut = () => {
+    firebase.signOut();
+    history.push("/");
   };
 
   const handleMenu = (event) => {
@@ -58,16 +69,21 @@ export default function Navbar() {
       <FormGroup></FormGroup>
       <AppBar position="static">
         <Toolbar className={classes.container}>
-          <img className={classes.logo} src={img} alt="logo" />
-          <Typography variant="h6" className={classes.title}>
+          <img
+            className={classes.logo}
+            src={img}
+            alt="logo"
+            onClick={() => history.push("/")}
+          />
+          <Typography
+            variant="h6"
+            className={classes.title}
+            onClick={() => history.push("/")}
+          >
             Lighthouse Job Search
           </Typography>
-          <ButtonGroup disableElevation variant="contained" color="primary">
-            <Button>Sign in</Button>
-            <Button>Sign up</Button>
-          </ButtonGroup>
-          <Typography variant="h6" className={classes.title}></Typography>
-          {auth && (
+
+          {currentUser ? (
             <div>
               <IconButton
                 aria-label="account of current user"
@@ -76,6 +92,9 @@ export default function Navbar() {
                 onClick={handleMenu}
                 color="inherit"
               >
+                <Typography variant="h6" className={classes.title}>
+                  {currentUser.displayName}
+                </Typography>
                 <AccountCircle />
               </IconButton>
               <Menu
@@ -94,9 +113,18 @@ export default function Navbar() {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
               </Menu>
             </div>
+          ) : (
+            <>
+              <ButtonGroup disableElevation variant="contained" color="primary">
+                <Button onClick={() => history.push("/login")}>Sign in</Button>
+                <Button onClick={() => history.push("/register")}>
+                  Sign up
+                </Button>
+              </ButtonGroup>
+            </>
           )}
         </Toolbar>
       </AppBar>
