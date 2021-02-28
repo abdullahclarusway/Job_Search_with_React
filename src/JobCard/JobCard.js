@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardActions,
@@ -22,17 +22,48 @@ import TimelineIcon from "@material-ui/icons/Timeline";
 import CategoryIcon from "@material-ui/icons/Category";
 import useStyles from "./styles";
 import { useHistory } from "react-router-dom";
+import Modal from "react-modal";
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
 
 const JobCard = ({ data }) => {
   const classes = useStyles();
   const history = useHistory();
   const id = data.id;
+  var subtitle;
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const addJob = async () => {
+    let savedJobList = await localStorage.getItem("FAVORITES");
+    savedJobList = savedJobList == null ? [] : JSON.parse(savedJobList);
+    const updatedJobList = [...savedJobList, data];
+    localStorage.setItem("FAVORITES", JSON.stringify(updatedJobList));
+  };
+  const saveJob = () => {
+    setIsOpen(true);
+    addJob();
+  };
 
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = "#f00";
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  const deneme = localStorage.getItem("@FAVORITES");
+  console.log(deneme);
   return (
-    <Card
-      className={classes.card}
-      onClick={() => history.push(`/detail/${id}`, { params: { data } })}
-    >
+    <Card className={classes.card}>
       <CardHeader
         title={data.title}
         subheader={moment(data.publication_date).format("MMM Do YY")}
@@ -41,7 +72,10 @@ const JobCard = ({ data }) => {
         className={classes.media}
         image={"https://source.unsplash.com/random/200x200?sig=1"}
       />
-      <div className={classes.overlay2}>
+      <div
+        className={classes.overlay2}
+        onClick={() => history.push(`/detail/${id}`, { params: { data } })}
+      >
         <Button style={{ color: "black" }} size="small">
           <MoreHorizIcon fontSize="default" />
         </Button>
@@ -89,9 +123,25 @@ const JobCard = ({ data }) => {
         </Typography>
       </div>
       <CardActions className={classes.cardActions}>
-        <IconButton aria-label="add to favorites">
+        <IconButton aria-label="add to favorites" onClick={saveJob}>
           <FavoriteIcon />
         </IconButton>
+
+        <Modal
+          isOpen={modalIsOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+        >
+          <h2 ref={(_subtitle) => (subtitle = _subtitle)}>
+            Added to Favorites
+          </h2>
+          <Button variant="secondary">Go to Favorites</Button>
+          <Button variant="primary" onClick={closeModal}>
+            Close
+          </Button>
+        </Modal>
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
