@@ -20,7 +20,6 @@ export default makeStyles({
     borderRadius: "15px",
     height: "100%",
     position: "relative",
-    cursor: "pointer",
     margin: 10,
     boxSizing: "border-box",
   },
@@ -29,6 +28,7 @@ export default makeStyles({
     top: "20px",
     right: "20px",
     color: "white",
+    cursor: "pointer",
   },
   grid: {
     display: "flex",
