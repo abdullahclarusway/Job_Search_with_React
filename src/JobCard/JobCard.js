@@ -23,6 +23,8 @@ import CategoryIcon from "@material-ui/icons/Category";
 import useStyles from "./styles";
 import { useHistory } from "react-router-dom";
 import Modal from "react-modal";
+import { useParams } from "react-router-dom";
+
 const customStyles = {
   content: {
     top: "50%",
@@ -35,6 +37,7 @@ const customStyles = {
 };
 
 const JobCard = ({ data }) => {
+  const { savedjobs } = useParams();
   const classes = useStyles();
   const history = useHistory();
   const id = data.id;
@@ -122,30 +125,42 @@ const JobCard = ({ data }) => {
           {data.job_type.charAt(0).toUpperCase() + data.job_type.slice(1)}
         </Typography>
       </div>
-      <CardActions className={classes.cardActions}>
-        <IconButton aria-label="add to favorites" onClick={saveJob}>
-          <FavoriteIcon />
-        </IconButton>
+      {savedjobs ? (
+        <Button variant="contained" color="secondary">
+          Delete from List
+        </Button>
+      ) : (
+        <CardActions className={classes.cardActions}>
+          <IconButton aria-label="add to favorites" onClick={saveJob}>
+            <FavoriteIcon />
+          </IconButton>
 
-        <Modal
-          isOpen={modalIsOpen}
-          onAfterOpen={afterOpenModal}
-          onRequestClose={closeModal}
-          style={customStyles}
-          contentLabel="Example Modal"
-        >
-          <h2 ref={(_subtitle) => (subtitle = _subtitle)}>
-            Added to Favorites
-          </h2>
-          <Button variant="secondary">Go to Favorites</Button>
-          <Button variant="primary" onClick={closeModal}>
-            Close
-          </Button>
-        </Modal>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-      </CardActions>
+          <Modal
+            isOpen={modalIsOpen}
+            onAfterOpen={afterOpenModal}
+            onRequestClose={closeModal}
+            style={customStyles}
+            contentLabel="Example Modal"
+          >
+            <h2 ref={(_subtitle) => (subtitle = _subtitle)}>
+              Added to Favorites
+            </h2>
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={() => history.push("/savedjobs")}
+            >
+              Go to Favorites
+            </Button>
+            <Button color="secondary" variant="contained" onClick={closeModal}>
+              Close
+            </Button>
+          </Modal>
+          <IconButton aria-label="share">
+            <ShareIcon />
+          </IconButton>
+        </CardActions>
+      )}
     </Card>
   );
 };
