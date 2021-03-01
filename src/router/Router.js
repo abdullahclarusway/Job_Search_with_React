@@ -8,6 +8,7 @@ import Signup from "../pages/Signup";
 import Category from "../categories/Category";
 import Detail from "../pages/Detail";
 import { FirebaseAuthContext } from "../context/AuthContext";
+import SavedJobs from "../pages/SavedJobs";
 
 function AppRouter() {
   const { currentUser } = useContext(FirebaseAuthContext);
@@ -24,6 +25,7 @@ function AppRouter() {
           component={currentUser ? Category : SignIn}
         />
         <Route exact path="/detail/:id" component={Detail} />
+        <Route exact path="/:savedjobs" component={SavedJobs} />
       </Switch>
       <Footer />
     </Router>
