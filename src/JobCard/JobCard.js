@@ -67,21 +67,9 @@ const JobCard = ({ data }) => {
   console.log(deneme);
   return (
     <Card className={classes.card}>
-      <CardHeader
-        title={data.title}
-        subheader={moment(data.publication_date).format("MMM Do YY")}
-      />
-      <CardMedia
-        className={classes.media}
-        image={"https://source.unsplash.com/random/200x200?sig=1"}
-      />
-      <div
-        className={classes.overlay2}
-        onClick={() => history.push(`/detail/${id}`, { params: { data } })}
-      >
-        <Button style={{ color: "black" }} size="small">
-          <MoreHorizIcon fontSize="default" />
-        </Button>
+      <div className={classes.header}>
+        <h2 className={classes.header__title}>{data.title}</h2>
+        <p>{moment(data.publication_date).format("MMM Do YY")}</p>
       </div>
       <div className={classes.details}>
         <BusinessCenterIcon />
@@ -92,15 +80,6 @@ const JobCard = ({ data }) => {
           component="h3"
         >
           {data.company_name}
-        </Typography>
-        <CategoryIcon />
-        <Typography
-          className={classes.title}
-          gutterBottom
-          variant="h5"
-          component="h2"
-        >
-          {data.category}
         </Typography>
       </div>
       <div className={classes.details}>
@@ -114,6 +93,8 @@ const JobCard = ({ data }) => {
         >
           {data.candidate_required_location}
         </Typography>
+      </div>
+      <div className={classes.details}>
         <TimelineIcon color="disabled" />
         <Typography
           className={classes.title}
@@ -131,9 +112,16 @@ const JobCard = ({ data }) => {
         </Button>
       ) : (
         <CardActions className={classes.cardActions}>
-          <IconButton aria-label="add to favorites" onClick={saveJob}>
-            <FavoriteIcon />
-          </IconButton>
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            className={classes.button}
+            startIcon={<FavoriteIcon />}
+            onClick={saveJob}
+          >
+            Save
+          </Button>
 
           <Modal
             isOpen={modalIsOpen}
@@ -146,19 +134,30 @@ const JobCard = ({ data }) => {
               Added to Favorites
             </h2>
             <Button
-              color="secondary"
+              color="primary"
               variant="contained"
               onClick={() => history.push("/savedjobs")}
             >
               Go to Favorites
             </Button>
-            <Button color="secondary" variant="contained" onClick={closeModal}>
+            <Button color="default" variant="contained" onClick={closeModal}>
               Close
             </Button>
           </Modal>
-          <IconButton aria-label="share">
-            <ShareIcon />
-          </IconButton>
+          <div
+            className={classes.overlay2}
+            onClick={() => history.push(`/detail/${id}`, { params: { data } })}
+          >
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              className={classes.button}
+              startIcon={<MoreHorizIcon />}
+            >
+              More
+            </Button>
+          </div>
         </CardActions>
       )}
     </Card>
