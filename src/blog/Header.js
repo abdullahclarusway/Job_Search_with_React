@@ -28,7 +28,19 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
     fontWeight: 600,
     fontSize: 20,
+    backgroundColor: "#3f51b5",
+    borderRadius: 10,
+    color: "white",
+    "&:hover": {
+      backgroundColor: "lightgray",
+      color: "black",
+      textDecoration: "none",
+    },
   },
+  header: {
+    textAlign: "center",
+  },
+
   logo: {
     width: 50,
     borderRadius: 50,
@@ -41,6 +53,7 @@ function Header(props) {
 
   return (
     <React.Fragment>
+      <h1 className={classes.header}>Select your category</h1>
       <Toolbar
         component="nav"
         variant="dense"
@@ -48,7 +61,6 @@ function Header(props) {
       >
         {sections.map((section) => (
           <Link
-            color="inherit"
             noWrap
             key={section.title}
             variant="body2"
