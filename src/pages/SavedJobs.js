@@ -5,9 +5,9 @@ import useStyles from "../JobCard/styles";
 
 const SavedJobs = () => {
   const classes = useStyles();
-  const [jobList, setJobList] = useState([]);
   const res = JSON.parse(localStorage.getItem("FAVORITES"));
   const len = res.length;
+  console.log(res);
   console.log(len);
 
   return (
@@ -18,8 +18,10 @@ const SavedJobs = () => {
         alignItems="stretch"
         spacing={3}
       >
-        {res.map((item) => (
-          <JobCard data={item} />
+        {res?.map((item) => (
+          <Grid key={item._id} item xs={12} sm={3}>
+            <JobCard data={item} />
+          </Grid>
         ))}
       </Grid>
     </div>
