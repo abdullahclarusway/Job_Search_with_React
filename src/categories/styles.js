@@ -11,4 +11,12 @@ export default makeStyles((theme) => ({
   actionDiv: {
     textAlign: "center",
   },
+  fav_button: {
+    padding: 10,
+    borderRadius: 10,
+    position: "fixed",
+    top: 15,
+    right: "50%",
+    
+  },
 }));
