@@ -6,24 +6,17 @@ import {
   CardMedia,
   Button,
   Typography,
+  CardHeader,
 } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
-import IconButton from "@material-ui/core/IconButton";
-import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
-import DeleteIcon from "@material-ui/icons/Delete";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import moment from "moment";
-import CardHeader from "@material-ui/core/CardHeader";
-import BusinessIcon from "@material-ui/icons/Business";
-import BusinessCenterIcon from "@material-ui/icons/BusinessCenter";
-import TimelineIcon from "@material-ui/icons/Timeline";
-import CategoryIcon from "@material-ui/icons/Category";
 import useStyles from "./styles";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import Modal from "react-modal";
-import { useParams } from "react-router-dom";
+import AccountBalanceTwoToneIcon from "@material-ui/icons/AccountBalanceTwoTone";
+import TimerTwoToneIcon from "@material-ui/icons/TimerTwoTone";
 
 const customStyles = {
   content: {
@@ -43,19 +36,31 @@ const JobCard = ({ data }) => {
   const id = data.id;
   var subtitle;
   const [modalIsOpen, setIsOpen] = React.useState(false);
+
   const addJob = async () => {
     let savedJobList = await localStorage.getItem("FAVORITES");
     savedJobList = savedJobList == null ? [] : JSON.parse(savedJobList);
     const updatedJobList = [...savedJobList, data];
     localStorage.setItem("FAVORITES", JSON.stringify(updatedJobList));
   };
+
   const saveJob = () => {
     setIsOpen(true);
     addJob();
   };
 
+  const deleteJob = async () => {
+    let list = await localStorage.getItem("FAVORITES");
+    list = list == null ? [] : JSON.parse(list);
+    const index = list.findIndex((x) => x.id === data.id);
+    if (index > -1) {
+      list.splice(index, 1);
+      localStorage.setItem("FAVORITES", JSON.stringify(list));
+      history.push("/savedJobs");
+    }
+  };
+
   function afterOpenModal() {
-    // references are now sync'd and can be accessed.
     subtitle.style.color = "#f00";
   }
 
@@ -63,23 +68,21 @@ const JobCard = ({ data }) => {
     setIsOpen(false);
   }
 
-  const deneme = localStorage.getItem("@FAVORITES");
-  console.log(deneme);
   return (
     <Card className={classes.card}>
       <div className={classes.header}>
         <h2 className={classes.header__title}>{data.title}</h2>
-        <p>{moment(data.publication_date).format("MMM Do YY")}</p>
+        <p>{moment(data.publication_date).format("Do MMM YY")}</p>
       </div>
       <div className={classes.details}>
-        <BusinessCenterIcon />
+        <AccountBalanceTwoToneIcon />
         <Typography
           className={classes.title}
           gutterBottom
           variant="h5"
-          component="h3"
+          component="h5"
         >
-          {data.company_name}
+          {data.company_name} - {data.category}
         </Typography>
       </div>
       <div className={classes.details}>
@@ -88,26 +91,26 @@ const JobCard = ({ data }) => {
           className={classes.title}
           gutterBottom
           variant="h5"
-          component="h2"
+          component="h5"
           color="textSecondary"
         >
           {data.candidate_required_location}
         </Typography>
       </div>
       <div className={classes.details}>
-        <TimelineIcon color="disabled" />
+        <TimerTwoToneIcon color="disabled" />
         <Typography
           className={classes.title}
           gutterBottom
           variant="h5"
-          component="h2"
+          component="h5"
           color="textSecondary"
         >
           {data.job_type.charAt(0).toUpperCase() + data.job_type.slice(1)}
         </Typography>
       </div>
       {savedjobs ? (
-        <Button variant="contained" color="secondary">
+        <Button variant="contained" color="secondary" onClick={deleteJob}>
           Delete from List
         </Button>
       ) : (
@@ -122,7 +125,6 @@ const JobCard = ({ data }) => {
           >
             Save
           </Button>
-
           <Modal
             isOpen={modalIsOpen}
             onAfterOpen={afterOpenModal}

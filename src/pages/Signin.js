@@ -15,6 +15,8 @@ import Container from "@material-ui/core/Container";
 import firebase from "../firebase/Firebase.utils";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,8 +37,11 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
+// onClick={() => history.push(`/detail/${id}`, { params: { data } })}
 
 export default function Signin() {
+  const history = useHistory();
+  const { slug } = useParams();
   const signinValidationSchema = Yup.object().shape({
     email: Yup.string().email("Invalid Email").required("Email is required!!"),
     password: Yup.string()
@@ -52,7 +57,7 @@ export default function Signin() {
     validationSchema: signinValidationSchema,
     onSubmit: (values) => {
       firebase.signIn(values.email, values.password);
-      alert(JSON.stringify(values, null, 2));
+      slug ? history.push(`/category/${slug}`) : history.push("/");
     },
   });
 
@@ -63,6 +68,7 @@ export default function Signin() {
 
   const handleGoogleButtonClick = () => {
     firebase.useGoogleProvider();
+    slug ? history.push(`/category/${slug}`) : history.push("/");
   };
 
   return (
@@ -73,7 +79,7 @@ export default function Signin() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Sign In
         </Typography>
         <form
           className={classes.form}

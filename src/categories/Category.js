@@ -3,18 +3,23 @@ import { Grid, CircularProgress } from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import useStyles from "./styles";
 import axios from "axios";
-import JobCard from "../JobCard/JobCard";
+import JobCard from "../components/JobCard/JobCard";
 import ReactPaginate from "react-paginate";
 import "./Pagination.css";
+import Button from "@material-ui/core/Button";
+import Icon from "@material-ui/core/Icon";
+import { useHistory } from "react-router-dom";
+
 function Category() {
   const classes = useStyles();
   const { slug } = useParams();
+  const history = useHistory();
   // const [data, setData] = useState([]);
   console.log(slug);
 
   const [offset, setOffset] = useState(0);
 
-  const [perPage, setPerPage] = useState(17);
+  const [perPage, setPerPage] = useState(20);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageCount, setPageCount] = useState(0);
   const [postData, setPostData] = useState([]);
@@ -66,6 +71,15 @@ function Category() {
         subContainerClassName={"pages pagination"}
         activeClassName={"active"}
       />
+
+      <Button
+        variant="contained"
+        color="primary"
+        className={classes.fav_button}
+        onClick={() => history.push("/savedjobs")}
+      >
+        Go to Favorites
+      </Button>
     </Grid>
   );
 }

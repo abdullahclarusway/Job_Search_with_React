@@ -24,9 +24,6 @@ export default makeStyles((theme) => ({
     boxSizing: "border-box",
   },
   overlay2: {
-    // position: "absolute",
-    // bottom: "20px",
-    // right: "20px",
     color: "white",
     cursor: "pointer",
   },

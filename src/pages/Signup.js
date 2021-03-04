@@ -15,6 +15,7 @@ import Container from "@material-ui/core/Container";
 import firebase from "../firebase/Firebase.utils";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useHistory, useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Signup() {
+  const { slug } = useParams();
   const signupValidationSchema = Yup.object().shape({
     displayName: Yup.string().required("Display Name is required!!"),
     email: Yup.string().email("Invalid Email").required("Email is required!!"),
@@ -54,7 +56,7 @@ export default function Signup() {
     validationSchema: signupValidationSchema,
     onSubmit: (values) => {
       firebase.register(values.displayName, values.email, values.password);
-      alert(JSON.stringify(values, null, 2));
+      history.push("/login");
     },
   });
 
@@ -62,9 +64,11 @@ export default function Signup() {
 
   const classes = useStyles();
   console.log("firebase", firebase);
+  const history = useHistory();
 
   const handleGoogleButtonClick = () => {
     firebase.useGoogleProvider();
+    slug ? history.push(`/category/${slug}`) : history.push("/");
   };
 
   return (
@@ -139,7 +143,7 @@ export default function Signup() {
             color="primary"
             className={classes.submit}
           >
-            Sign In
+            Sign Up
           </Button>
           <Button
             variant="contained"
