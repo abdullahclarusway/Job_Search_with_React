@@ -7,7 +7,6 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -34,6 +33,12 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    backgroundColor: "#11698e ",
+    "&:hover": {
+      backgroundColor: "lightgray",
+      color: "black",
+      textDecoration: "none",
+    },
   },
 }));
 
@@ -148,6 +153,7 @@ export default function Signup() {
           <Button
             variant="contained"
             color="primary"
+            className={classes.submit}
             fullWidth
             onClick={handleGoogleButtonClick}
           >

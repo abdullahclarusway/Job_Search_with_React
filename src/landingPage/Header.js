@@ -2,12 +2,7 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import SearchIcon from "@material-ui/icons/Search";
-import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
-import img from "../assets/logo1.png";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -28,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
     fontWeight: 600,
     fontSize: 20,
-    backgroundColor: "#3f51b5",
+    backgroundColor: "#11698e",
     borderRadius: 10,
     color: "white",
     "&:hover": {
@@ -49,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Header(props) {
   const classes = useStyles();
-  const { sections, title } = props;
+  const { sections } = props;
 
   return (
     <React.Fragment>

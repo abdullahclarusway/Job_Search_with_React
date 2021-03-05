@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import JobCard from "../components/JobCard/JobCard";
-import { Grid, CircularProgress } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import useStyles from "../components/JobCard/styles";
 
 const SavedJobs = () => {

@@ -45,6 +45,12 @@ export default makeStyles((theme) => ({
   },
   button: {
     margin: theme.spacing(1),
+    backgroundColor: "#11698e",
+    "&:hover": {
+      backgroundColor: "lightgray",
+      color: "black",
+      textDecoration: "none",
+    },
   },
   title: {
     marginLeft: 20,
@@ -55,7 +61,12 @@ export default makeStyles((theme) => ({
     padding: 10,
   },
   header__title: {
-    color: "blue",
+    color: "#11698e",
     marginBottom: 5,
+    "&:hover": {
+      backgroundColor: "lightgray",
+      color: "black",
+      textDecoration: "none",
+    },
   },
 }));

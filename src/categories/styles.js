@@ -17,6 +17,7 @@ export default makeStyles((theme) => ({
     position: "fixed",
     top: 15,
     right: "50%",
-    
+    backgroundColor: "#11698e",
+    zIndex: 1000,
   },
 }));

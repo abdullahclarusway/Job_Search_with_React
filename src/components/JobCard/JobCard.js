@@ -1,13 +1,5 @@
-import React, { useState } from "react";
-import {
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Button,
-  Typography,
-  CardHeader,
-} from "@material-ui/core";
+import React from "react";
+import { Card, CardActions, Button, Typography } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
@@ -154,7 +146,7 @@ const JobCard = ({ data }) => {
               variant="contained"
               color="secondary"
               size="small"
-              className={classes.button}
+              // className={classes.button}
               startIcon={<MoreHorizIcon />}
             >
               More

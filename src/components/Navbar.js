@@ -5,7 +5,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import FormGroup from "@material-ui/core/FormGroup";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import img from "../assets/logo1.png";
@@ -18,6 +17,9 @@ import { FirebaseAuthContext } from "../context/AuthContext";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    position: "sticky",
+    top: 0,
+    zIndex: 999,
   },
 
   menuButton: {
@@ -29,11 +31,15 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
     fontSize: 28,
     cursor: "pointer",
+    marginRight: 20,
   },
   logo: {
     width: 50,
     borderRadius: 50,
     cursor: "pointer",
+  },
+  container: {
+    backgroundColor: "#11698e",
   },
 }));
 
@@ -63,7 +69,6 @@ export default function Navbar() {
 
   return (
     <div className={classes.root}>
-      <FormGroup></FormGroup>
       <AppBar position="static">
         <Toolbar className={classes.container}>
           <img
@@ -89,7 +94,7 @@ export default function Navbar() {
                 color="inherit"
               >
                 <Typography variant="h6" className={classes.title}>
-                  {currentUser.displayName}
+                  {currentUser.displayName.toUpperCase()}
                 </Typography>
                 <AccountCircle />
               </IconButton>
@@ -114,7 +119,7 @@ export default function Navbar() {
             </div>
           ) : (
             <>
-              <ButtonGroup disableElevation variant="contained" color="primary">
+              <ButtonGroup disableElevation variant="contained">
                 <Button onClick={() => history.push("/login")}>Sign in</Button>
                 <Button onClick={() => history.push("/register")}>
                   Sign up
